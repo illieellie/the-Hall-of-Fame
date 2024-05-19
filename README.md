@@ -3,11 +3,17 @@
 
 0. 아키텍처 조사
 - clean, 헥사곤, 계층형, DDD
+https://www.notion.so/imellie/546431cd9bc8492cb3e84150a6b6a2bd?pvs=4
+
 1. DB 조사
 - RDB, Nosql
+
 2. API
 - 오픈 api, 뉴스 api, 기록 api
+
 3. ERD 설계
 - 도메인, 비즈니스 로직, DB
+
 4. 시퀀스 다이어그램
+
 5. swagger
