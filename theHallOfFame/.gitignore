@@ -3,6 +3,7 @@ HELP.md
 .idea
 properties
 application.properties
+application.yml
 
 build/
 !gradle/wrapper/gradle-wrapper.jar

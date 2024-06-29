@@ -1,4 +1,3 @@
-
 #mongodb
 mongodb:
-  connectionString : mongodb://localhost:27017/admin
+  connectionString: mongodb://localhost:27017/admin
