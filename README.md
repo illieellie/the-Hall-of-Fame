@@ -13,4 +13,9 @@
 2024-06-29 (토)
 - feat: create artist repository and test for searching artist
 
+2024-07-01 (월)
+- feat: add method about artist service
+- feat, test: artist data insert to db after api call
+
+
 
