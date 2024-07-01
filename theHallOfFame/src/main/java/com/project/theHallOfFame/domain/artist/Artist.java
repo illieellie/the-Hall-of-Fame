@@ -1,11 +1,22 @@
 package com.project.theHallOfFame.domain.artist;
 
 import org.bson.types.ObjectId;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
 
+@Getter
+@Setter
 public class Artist {
-    ObjectId id;
+
+    @Id
+    ObjectId id; // mongoTemplate 고유 id
+
+    String artistId;
     String name;
     String href;
+    String images;
+
 
 //    public artist(String id, String name, String href) {
 //        this.id = id;
@@ -13,31 +24,6 @@ public class Artist {
 //        this.href = href;
 //    }
 
-    // getter and setter
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-
+    // getter and setter (lombok)
 
 }

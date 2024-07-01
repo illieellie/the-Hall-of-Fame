@@ -5,7 +5,9 @@ import java.util.List;
 
 public interface ArtistRepository {
     //List<Artist> findAll();
-    Artist findArtistByName(String Name);
+    Artist findArtistById(String id);
 
     List<Artist> findAll();
+
+    Artist findArtistByName(String artistName);
 }

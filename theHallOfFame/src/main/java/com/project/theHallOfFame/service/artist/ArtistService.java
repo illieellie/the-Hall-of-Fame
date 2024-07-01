@@ -13,11 +13,14 @@ public class ArtistService {
 
     private final ArtistRepository artistRepository;
 
-    public Artist findArtist(String name) {
-        return artistRepository.findArtistByName(name);
+    public Artist findArtistById(String artistId) {
+        return artistRepository.findArtistById(artistId);
     }
 
     public List<Artist> findArtistAll() {
         return artistRepository.findAll();
+    }
+
+    public Artist findArtistByName(String artistName) {return artistRepository.findArtistByName(artistName);
     }
 }

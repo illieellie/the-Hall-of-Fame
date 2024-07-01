@@ -22,14 +22,20 @@ public class MongoTemplateArtistRepository implements ArtistRepository{
     private final String COLLECTION_NAME = "artist";
 
     @Override
-    public Artist findArtistByName(String name) {
-        Query query = Query.query(Criteria.where("name").is(name));
+    public Artist findArtistById(String artistId) {
+        Query query = Query.query(Criteria.where("artistId").is(artistId));
         return mongoTemplate.findOne(query,Artist.class, COLLECTION_NAME);
     }
 
     @Override
     public List<Artist> findAll() {
         return mongoTemplate.findAll(Artist.class, COLLECTION_NAME);
+    }
+
+    @Override
+    public Artist findArtistByName(String artistName) {
+        Query query = Query.query(Criteria.where("name").is(artistName));
+        return mongoTemplate.findOne(query,Artist.class, COLLECTION_NAME);
     }
 
 
