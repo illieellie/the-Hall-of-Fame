@@ -1,23 +1,14 @@
 package com.project.theHallOfFame.repository.artist;
 
-//import com.project.theHallOfFame.AutoConfig;
-
-import com.project.theHallOfFame.AutoConfig;
-import com.project.theHallOfFame.MongoDBConfig;
 import com.project.theHallOfFame.domain.artist.Artist;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MongoTemplateArtistRepositoryTest {
@@ -29,8 +20,8 @@ class MongoTemplateArtistRepositoryTest {
 
 
     @Test
-    void findArtistByName() {
-        Artist artist = artistRepository.findArtistByName("BTS");
+    void findArtistById() {
+        Artist artist = artistRepository.findArtistById("3Nrfpe0tUJi4K4DXYWgMUX");
         Assertions.assertThat(artist.getName()).isEqualTo("BTS");
     }
 
@@ -40,4 +31,19 @@ class MongoTemplateArtistRepositoryTest {
         List<Artist> artistList = artistRepository.findAll();
         Assertions.assertThat(artistList).isNotNull();
     }
+
+    @Test
+    void findArtistByName() {
+        Artist artist = artistRepository.findArtistByName("BLACKPINK");
+        Assertions.assertThat(artist.getName()).isEqualTo("BLACKPINK");
+    }
+
+    // 데이터 없을 경우
+    @Test
+    void findArtistById_NULL() {
+        Artist artist = artistRepository.findArtistById("1234");
+        Assertions.assertThat(artist).isEqualTo(null);
+    }
+
+
 }

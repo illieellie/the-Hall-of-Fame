@@ -1,15 +1,12 @@
 package com.project.theHallOfFame.repository.artist;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.internal.MongoClientImpl;
+
 import com.project.theHallOfFame.domain.artist.Artist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -37,6 +34,5 @@ public class MongoTemplateArtistRepository implements ArtistRepository{
         Query query = Query.query(Criteria.where("name").is(artistName));
         return mongoTemplate.findOne(query,Artist.class, COLLECTION_NAME);
     }
-
 
 }
