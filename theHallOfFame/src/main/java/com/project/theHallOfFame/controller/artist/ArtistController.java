@@ -18,7 +18,7 @@ public class ArtistController {
 
     private final ArtistService artistService;
 
-    @GetMapping("/artist/{artisId}")
+    @GetMapping("/artist/{artistId}")
     public Artist findArtistbyId(@PathVariable String artistId) {
         Artist artist = artistService.findArtistById(artistId);
         if (artist == null) {
