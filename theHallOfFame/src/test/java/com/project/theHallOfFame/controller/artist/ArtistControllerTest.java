@@ -63,7 +63,8 @@ class ArtistControllerTest {
                         get("/artist/{id}", artistId)
                                 .param("artistId", artistId)
                 ).andExpect(status().isOk())
-                .andExpect(content().string(containsString("BTS")));
+                .andExpect(content().string(containsString("BTS")))
+                .andDo(print());
     }
 
     @Test
