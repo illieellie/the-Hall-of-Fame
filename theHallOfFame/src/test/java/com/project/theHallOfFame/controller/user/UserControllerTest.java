@@ -1,5 +1,7 @@
 package com.project.theHallOfFame.controller.user;
 
+import com.project.theHallOfFame.WebConfig;
+import com.project.theHallOfFame.interceptor.AuthenticationInterceptor;
 import com.project.theHallOfFame.service.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,15 +22,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(UserController.class)
+//@WebMvcTest(WebConfig.class)
+@WebMvcTest({UserController.class, WebConfig.class})
 class UserControllerTest {
 
     @Autowired
     MockMvc mockMvc;
 
+    @Autowired
+    AuthenticationInterceptor authInterceptor;
+
     @MockBean
     UserService userService;
 
+    // 여기다가 인터셉터 빈등록해보기
 
     @Test
     @DisplayName("로그인성공_토큰발급")
@@ -61,6 +68,37 @@ class UserControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().is4xxClientError())
                 .andExpect(content().string(""))
+                .andDo(print());
+    }
+
+    @Test
+    void findUserPage_success() throws Exception{
+        /*
+        *     @GetMapping("/userPage/{userId}")
+    public ResponseEntity<String> findUserPage(@PathVariable String userId){
+        * */
+
+        mockMvc.perform(
+                        get("/userPage/{userId}", "1")
+                                .param("userId", "1")
+                                .header("TOKEN", "TOKEN1234")
+                ).andExpect(status().isOk())
+                .andExpect(content().string(containsString("ACCEPT")))
+                .andDo(print());
+    }
+
+    @Test
+    void findUserPage_fail() throws Exception{
+        /*
+        *     @GetMapping("/userPage/{userId}")
+    public ResponseEntity<String> findUserPage(@PathVariable String userId){
+        * */
+
+        mockMvc.perform(
+                        get("/userPage/{userId}", "1")
+                                .param("userId", "1")
+                                .header("Tok", "Tok1234") // 대소문자 상관이 없음
+                ).andExpect(status().is4xxClientError())
                 .andDo(print());
     }
 }

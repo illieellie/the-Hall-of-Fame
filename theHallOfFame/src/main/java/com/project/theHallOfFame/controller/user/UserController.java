@@ -1,13 +1,15 @@
 package com.project.theHallOfFame.controller.user;
 
+import com.project.theHallOfFame.annotation.Auth;
 import com.project.theHallOfFame.domain.user.User;
 import com.project.theHallOfFame.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import static com.project.theHallOfFame.annotation.Auth.Role.MEMBER;
+
+@RestController
 @RequiredArgsConstructor
 public class UserController {
     // 서비스 의존성 주입
@@ -31,4 +33,16 @@ public class UserController {
     // /join 기능
     // 로그 아웃 기능
 
+    // userpage에 연결
+    @Auth(role=MEMBER)
+    @GetMapping("/userPage/{userId}")
+    public ResponseEntity<String> findUserPage(@PathVariable String userId){
+        // 인터셉터로 해당 페이지 이동하기 전 인가
+        System.out.println("[Debug] 테스트 로그입니다. findUserPage 컨트롤러.");
+
+        // userPage에 대한 정보들 불러오기
+        return ResponseEntity.ok().body("ACCEPT");
+    }
+
+    // admin page 연결?
 }
