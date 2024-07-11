@@ -23,3 +23,7 @@
 
 2024-07-03 (수)
 - test: artist controller unit test
+
+2024-07-10 (화)
+- feat: simple login
+- feat, test: simple interceptor create for authentication
