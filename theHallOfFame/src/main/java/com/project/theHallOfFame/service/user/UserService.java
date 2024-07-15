@@ -1,6 +1,8 @@
 package com.project.theHallOfFame.service.user;
 
+import com.project.theHallOfFame.domain.user.UserDetails;
 import com.project.theHallOfFame.repository.user.UserRepository;
+import com.project.theHallOfFame.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import java.util.Objects;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     public String loginValidation(String id, String pw){
 
@@ -37,9 +40,23 @@ public class UserService {
 
 
     private String createToken(String id) {
-        // JWT 토큰 임시 발급
+        // JWT 토큰 발급
+
+       //userRepository.에서 세부정보 가져오기 (db 설계부터 하자..)
+
+
+        //jwtService.createJwt();
+        /*
+        * String userId,
+    String userName,
+    String isAdmin
+        * */
+        //jwtService.createJwt();
         return "1";
     }
 
 
+    public UserDetails getUserDetails(String userId) {
+        return userRepository.getUserDetails(userId);
+    }
 }

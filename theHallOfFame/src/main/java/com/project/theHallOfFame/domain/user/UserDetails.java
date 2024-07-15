@@ -12,15 +12,11 @@ import java.util.List;
 @Setter
 public class UserDetails {
 
-    @Id
-    ObjectId id; // mongoTemplate 고유 id
-
     String userId;
     String authority;
+    String phone;
     String email;
     List<String> likeArtist;
     List<String> likeMusic;
-    String name;
-    String phone;
     String notes;
 }
