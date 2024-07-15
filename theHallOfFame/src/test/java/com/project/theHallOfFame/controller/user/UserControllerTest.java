@@ -1,7 +1,9 @@
 package com.project.theHallOfFame.controller.user;
 
 import com.project.theHallOfFame.WebConfig;
+import com.project.theHallOfFame.domain.user.UserDetails;
 import com.project.theHallOfFame.interceptor.AuthenticationInterceptor;
+import com.project.theHallOfFame.security.JwtService;
 import com.project.theHallOfFame.service.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +13,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.nullValue;
@@ -22,7 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@WebMvcTest(WebConfig.class)
 @WebMvcTest({UserController.class, WebConfig.class})
 class UserControllerTest {
 
@@ -35,7 +39,24 @@ class UserControllerTest {
     @MockBean
     UserService userService;
 
-    // 여기다가 인터셉터 빈등록해보기
+    @MockBean
+    JwtService jwtService;
+
+
+    Map<String, String> userInfo;
+    UserDetails userDetails;
+    UserControllerTest(){
+        userInfo = new HashMap<>();
+        userInfo.put("userId", "user1");
+        userInfo.put("name", "최호랑");
+        userInfo.put("token", "!@#$%^");
+
+        userDetails = new UserDetails();
+        userDetails.setUserId("user1");
+        userDetails.setAuthority("ADMIN");
+    }
+
+
 
     @Test
     @DisplayName("로그인성공_토큰발급")
@@ -73,27 +94,24 @@ class UserControllerTest {
 
     @Test
     void findUserPage_success() throws Exception{
-        /*
-        *     @GetMapping("/userPage/{userId}")
-    public ResponseEntity<String> findUserPage(@PathVariable String userId){
-        * */
+
+        // 진짜 토큰을 보내야 통과
+
+        // mockMvc 행위 지정
+        doReturn(userInfo).when(jwtService).validationToken();
+
 
         mockMvc.perform(
                         get("/userPage/{userId}", "1")
-                                .param("userId", "1")
-                                .header("TOKEN", "TOKEN1234")
+                                .param("userId", userInfo.get("userId"))
+                                .header("Authorization", "temp-token")
                 ).andExpect(status().isOk())
-                .andExpect(content().string(containsString("ACCEPT")))
+                //.andExpect(content().string(containsString("ACCEPT")))
                 .andDo(print());
     }
 
     @Test
     void findUserPage_fail() throws Exception{
-        /*
-        *     @GetMapping("/userPage/{userId}")
-    public ResponseEntity<String> findUserPage(@PathVariable String userId){
-        * */
-
         mockMvc.perform(
                         get("/userPage/{userId}", "1")
                                 .param("userId", "1")
@@ -101,4 +119,20 @@ class UserControllerTest {
                 ).andExpect(status().is4xxClientError())
                 .andDo(print());
     }
+    @Test
+    void findUserPageDetail_success() throws Exception{
+
+        // 토큰을 보내야 통과
+        // mockMvc 행위 지정
+        doReturn(userInfo).when(jwtService).validationToken();
+        doReturn(userDetails).when(userService).getUserDetails("user1");
+
+        mockMvc.perform(
+                        get("/userPage/{userId}", "user1")
+                                .header("Authorization", "temp-token")
+                ).andExpect(status().isOk())
+                .andExpect(content().string(containsString("ADMIN")))
+                .andDo(print());
+    }
+
 }
