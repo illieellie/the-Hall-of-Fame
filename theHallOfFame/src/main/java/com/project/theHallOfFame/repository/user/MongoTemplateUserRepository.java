@@ -1,7 +1,8 @@
 package com.project.theHallOfFame.repository.user;
 
 import com.project.theHallOfFame.domain.artist.Artist;
-import com.project.theHallOfFame.domain.user.User;
+import com.project.theHallOfFame.domain.user.UserDetails;
+import com.project.theHallOfFame.domain.user.UserSecurity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 @Repository
@@ -28,7 +30,17 @@ private final String COLLECTION_NAME = "userAccount";
     @Override
     public String getUserPw(String userId) {
         Query query = Query.query(Criteria.where("userId").is(userId));
-        User user = mongoTemplate.findOne(query, User.class, COLLECTION_NAME);
-        return user.getUserPassword();
+        UserSecurity user = mongoTemplate.findOne(query, UserSecurity.class, COLLECTION_NAME);
+        return Objects.requireNonNull(user).getUserPassword();
     }
+
+    @Override
+    public UserDetails getUserDetails(String userId) {
+
+        Query query = Query.query(Criteria.where("userId").is(userId));
+        return mongoTemplate.findOne(query, UserDetails.class, COLLECTION_NAME);
+
+    }
+
+
 }
