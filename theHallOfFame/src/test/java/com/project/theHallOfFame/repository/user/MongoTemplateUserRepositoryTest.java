@@ -1,6 +1,7 @@
 package com.project.theHallOfFame.repository.user;
 
 import com.project.theHallOfFame.domain.user.UserDetails;
+import com.project.theHallOfFame.domain.user.UserSecurity;
 import com.project.theHallOfFame.repository.artist.MongoTemplateArtistRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,15 +31,17 @@ class MongoTemplateUserRepositoryTest {
         Assertions.assertThat(isExistUser).isEqualTo(true);
     }
 
-    @Test
-    void getUserPw() {
-        String getUserPw = userRepository.getUserPw(userId);
-        Assertions.assertThat(getUserPw).isEqualTo(userPw);
-    }
 
     @Test
     void getUserDetails() {
         UserDetails userDetails = userRepository.getUserDetails(userId);
         Assertions.assertThat(userDetails).isNotNull();
+    }
+
+
+    @Test
+    void getUserSecurity() {
+        UserSecurity userSecurity = userRepository.getUserSecurity(userId);
+        Assertions.assertThat(userSecurity).isNotNull();
     }
 }
