@@ -54,14 +54,20 @@ public class JwtService {
         return request.getHeader("Authorization");
     }
 
+    public boolean isExistToken(){
+        // 1. JWT 확인
+        String accessToken = getJwtToken();
+        if(accessToken == null || accessToken.isEmpty()){
+            System.out.println("[Debug] 토큰을 찾을 수 없습니다.");
+            return false;
+        }
+        return true;
+    }
+
      public Map<String, String> validationToken() {
         Map<String, String> userInfo = new HashMap<>();
         //1. JWT 추출
         String accessToken = getJwtToken();
-        if(accessToken == null || accessToken.isEmpty()){
-            System.out.println("[Debug] 토큰을 찾을 수 없습니다.");
-            return userInfo;
-        }
 
         // 2. JWT parsing
         Jws<Claims> claims = null;
