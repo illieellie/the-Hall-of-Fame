@@ -30,7 +30,7 @@ public class JwtService {
     private final Date expiredTime;
 
     public JwtService(){
-        expiredSetting = 60*60*10000; // 1hour
+        expiredSetting = 60*60*1000; // 1hour
         jwtAlgorithm = SignatureAlgorithm.HS256;
         Date time = new Date();
         expiredTime = new Date(time.getTime()+expiredSetting);
