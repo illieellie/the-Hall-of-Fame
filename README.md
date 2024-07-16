@@ -23,3 +23,23 @@
 
 2024-07-03 (수)
 - test: artist controller unit test
+
+2024-07-10 (수)
+- feat: simple login
+- feat, test: simple interceptor create for authentication
+
+2024-07-15 (월)
+- feat: create logic of UserRepository
+- feat: create domain of user service
+- test: unit test logic of UserRepository
+- feat: create jwt logic, authenticationInterceptor
+- feat: add logic of user controller, user service
+- test: user controller test with AuthenticationInterceptor
+
+2024-07-16 (화)
+- feat: update login logic
+- test: test UserRepository
+- test: test UserService
+- feat: more divide into units
+- test: jwt test success
+
