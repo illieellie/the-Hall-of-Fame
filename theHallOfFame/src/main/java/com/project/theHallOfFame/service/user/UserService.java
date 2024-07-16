@@ -1,13 +1,11 @@
 package com.project.theHallOfFame.service.user;
 
 import com.project.theHallOfFame.domain.user.UserDetails;
+import com.project.theHallOfFame.domain.user.UserSecurity;
 import com.project.theHallOfFame.repository.user.UserRepository;
 import com.project.theHallOfFame.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -21,13 +19,15 @@ public class UserService {
         String token = null;
 
         // id 가 있는지 먼저 검증
-        String repoPw = null;
+        UserSecurity userSecurity;
         if(userRepository.getUserExist(id)){
-           repoPw = userRepository.getUserPw(id);  // 디비에서 id, pw 가져오기
+           userSecurity = userRepository.getUserSecurity(id);  // 디비에서 유저 시큐리티 get
+
+            if(checkMatch(pw, userSecurity.getUserPassword())){ // get token
+                token = createToken(userSecurity);
+            }
         }
-        if(checkMatch(pw, repoPw)){ // get token
-            token = createToken(id);
-        }
+
         return token;
     }
 
@@ -39,20 +39,10 @@ public class UserService {
     }
 
 
-    private String createToken(String id) {
+    private String createToken(UserSecurity us) {
         // JWT 토큰 발급
-
-       //userRepository.에서 세부정보 가져오기 (db 설계부터 하자..)
-
-
-        //jwtService.createJwt();
-        /*
-        * String userId,
-    String userName,
-    String isAdmin
-        * */
-        //jwtService.createJwt();
-        return "1";
+      String result = jwtService.createJwt(us.getUserId(), us.getName(), us.getAuthority());
+        return result;
     }
 
 

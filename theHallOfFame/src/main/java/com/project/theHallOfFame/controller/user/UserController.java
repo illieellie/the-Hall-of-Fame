@@ -26,9 +26,8 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserSecurity user){
-        // 인터셉터 테스트를 위해 우선 간단한 방식의 로그인을 구현, 디테일은 추후 수정
 
-        // RequestBody 무조건 객체 맵핑 형식으로만 받아올수있는지 확인
+        // + 이미 로그인된 사용자라면? (토큰이 있다면)
 
         // 서비스에서 validation
         String token = userService.loginValidation(user.getUserId(), user.getUserPassword());
@@ -48,8 +47,6 @@ public class UserController {
     @GetMapping("/userPage/{userId}")
     public ResponseEntity<String> findUserPage(@PathVariable String userId) throws Exception {
         // 인터셉터로 해당 페이지 이동하기 전 인가
-
-        // 이미 인터셉터에서 응답에 대한 바디를 지정했는데 여기서 바디를 추가로 지정하면 json이 안 예쁘게 추가되는 것 같음
 
         // user Page에 대한 정보들 불러오기
 

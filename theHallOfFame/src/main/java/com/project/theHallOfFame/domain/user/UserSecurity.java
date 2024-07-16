@@ -13,5 +13,7 @@ public class UserSecurity {
 
     String userId;
     String userPassword;
+    String name;
+    String authority;
 
 }

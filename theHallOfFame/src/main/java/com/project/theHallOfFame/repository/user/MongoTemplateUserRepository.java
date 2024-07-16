@@ -28,18 +28,17 @@ private final String COLLECTION_NAME = "userAccount";
     }
 
     @Override
-    public String getUserPw(String userId) {
-        Query query = Query.query(Criteria.where("userId").is(userId));
-        UserSecurity user = mongoTemplate.findOne(query, UserSecurity.class, COLLECTION_NAME);
-        return Objects.requireNonNull(user).getUserPassword();
-    }
-
-    @Override
     public UserDetails getUserDetails(String userId) {
 
         Query query = Query.query(Criteria.where("userId").is(userId));
         return mongoTemplate.findOne(query, UserDetails.class, COLLECTION_NAME);
 
+    }
+
+    @Override
+    public UserSecurity getUserSecurity(String userId) {
+        Query query = Query.query(Criteria.where("userId").is(userId));
+        return mongoTemplate.findOne(query, UserSecurity.class, COLLECTION_NAME);
     }
 
 
