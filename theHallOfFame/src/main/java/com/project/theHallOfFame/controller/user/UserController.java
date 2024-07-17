@@ -24,6 +24,7 @@ public class UserController {
     private final UserService userService;
     private final ObjectMapper objectMapper;
 
+    // login을 get, post 어떤 방식으로 하는게 맞는지? 고민
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserSecurity user){
 

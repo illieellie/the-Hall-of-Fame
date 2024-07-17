@@ -29,18 +29,18 @@ public class JwtService {
 
     private final Date expiredTime;
 
-    public JwtService(){
-        expiredSetting = 60*60*1000; // 1hour
+    public JwtService() {
+        expiredSetting = 60 * 60 * 1000; // 1hour
         jwtAlgorithm = SignatureAlgorithm.HS256;
         Date time = new Date();
-        expiredTime = new Date(time.getTime()+expiredSetting);
+        expiredTime = new Date(time.getTime() + expiredSetting);
     }
 
-    public String createJwt(String userId, String userName, String authority){
+    public String createJwt(String userId, String userName, String authority) {
         return Jwts.builder()
                 .setHeaderParam("type", "jwt")
-                .setHeaderParam("alg",jwtAlgorithm)
-                .claim("userId",userId)
+                .setHeaderParam("alg", jwtAlgorithm)
+                .claim("userId", userId)
                 .claim("name", userName)
                 .claim("authority", authority)
                 .setExpiration(expiredTime)
@@ -48,30 +48,13 @@ public class JwtService {
                 .compact();
     }
 
-    // 토큰 가져오기
-    private String getJwtToken(){
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        return request.getHeader("Authorization");
-    }
 
-    public boolean isExistToken(){
-        // 1. JWT 확인
-        String accessToken = getJwtToken();
-        if(accessToken == null || accessToken.isEmpty()){
-            System.out.println("[Debug] 토큰을 찾을 수 없습니다.");
-            return false;
-        }
-        return true;
-    }
-
-     public Map<String, String> validationToken() {
+    public Map<String, String> validationToken(String accessToken) {
         Map<String, String> userInfo = new HashMap<>();
-        //1. JWT 추출
-        String accessToken = getJwtToken();
 
-        // 2. JWT parsing
+        // 1. JWT parsing
         Jws<Claims> claims = null;
-        try{
+        try {
             claims = Jwts.parser()
                     .setSigningKey(jwtSecretKey)
                     .parseClaimsJws(accessToken);
@@ -80,19 +63,15 @@ public class JwtService {
             return userInfo;
         }
 
-        // 3. userId, 권한 추출
+        // 2. userId, 권한 등 추출
 
-        userInfo.put("userId", claims.getBody().get("userId",String.class));
-        userInfo.put("name", claims.getBody().get("name",String.class));
-        userInfo.put("authority", claims.getBody().get("authority",String.class));
+        userInfo.put("userId", claims.getBody().get("userId", String.class));
+        userInfo.put("name", claims.getBody().get("name", String.class));
+        userInfo.put("authority", claims.getBody().get("authority", String.class));
         userInfo.put("token", accessToken);
 
         return userInfo;
     }
-
-
-
-
 
 
 }

@@ -98,7 +98,7 @@ class UserControllerTest {
         // 진짜 토큰을 보내야 통과
 
         // mockMvc 행위 지정
-        doReturn(userInfo).when(jwtService).validationToken();
+        doReturn(userInfo).when(jwtService).validationToken("temp-token");
 
 
         mockMvc.perform(
@@ -124,7 +124,7 @@ class UserControllerTest {
 
         // 토큰을 보내야 통과
         // mockMvc 행위 지정
-        doReturn(userInfo).when(jwtService).validationToken();
+        doReturn(userInfo).when(jwtService).validationToken("temp-token");
         doReturn(userDetails).when(userService).getUserDetails("user1");
 
         mockMvc.perform(

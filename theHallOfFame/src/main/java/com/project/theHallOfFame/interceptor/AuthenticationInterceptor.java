@@ -32,19 +32,25 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
 
+        // annotation 검사
         Auth annotation = getControllerAnnotation(handlerMethod);
 
         if(annotation == null){
-            return true; // 메소드에 에노테이션 설정된 것이 없으면 pass
+            return true;
         }
 
-        // 토큰 유효성 검사 후 userId 반환
-        if(!jwtService.isExistToken()){
+        // get token
+        String accessToken = request.getHeader("Authorization");
+
+        // 토큰 유무 확인
+        if(accessToken ==null||accessToken.isEmpty()){
+            System.out.println("[Debug] 토큰을 찾을 수 없습니다.");
             setErrorResponse(response, NON_EXIST_TOKEN);
             return false;
         }
 
-        Map<String, String> userInfo = jwtService.validationToken();
+        // 토큰 유효성 검사 후 userId 반환
+        Map<String, String> userInfo = jwtService.validationToken(accessToken);
 
         if(userInfo.isEmpty()){
             setErrorResponse(response, NON_VALIDATION_TOKEN);
