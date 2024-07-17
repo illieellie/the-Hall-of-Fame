@@ -1,7 +1,6 @@
 package com.project.theHallOfFame.security;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,43 +18,47 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Import(Properties.class)
 @ExtendWith(MockitoExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class JwtServiceTest {
 
     @InjectMocks
     JwtService jwtService;
 
-    String tempJwtToken; // 1시간 만료이므로 단위 테스트 시 토큰 재발급 필요
+    static String jwtToken; // 1시간 만료이므로 단위 테스트 시 토큰 재발급 필요
 
     Map<String, String> userInfo;
     @BeforeEach
     void setUp() {
         // Springboot 로 테스트하는 것이 아니여서 @Value를 가져오는데 에러 발생, 단위 테스트를 위해 reflection 설정
         ReflectionTestUtils.setField(jwtService, "jwtSecretKey", "TEMPORARY_ACCESS_KEY");
-        tempJwtToken = "eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJ1c2VySWQiOiJhYSIsIm5hbWUiOiJKIiwiYXV0aG9yaXR5IjoiQURNSU4iLCJleHAiOjE3MjExMjA2Mjd9.fNhtykTh4tqyJ4y8akpVBuqicBLIYXAW2zn6to5PRuA";
-      }
+     }
 
     JwtServiceTest(){
         userInfo = new HashMap<>();
         userInfo.put("userId", "user1");
-        userInfo.put("name", "최호랑");
-        userInfo.put("token", "!@#$%^");
+        userInfo.put("name", "최호랑"); // 한글도 영어도 ok
+        userInfo.put("authority", "ADMIN");
 
     }
 
     @Test
+    @Order(1)
     void createJwt() {
-        String userId = "aa";
-        String userName = "J";
-        String authority = "ADMIN";
-        String jwt = jwtService.createJwt(userId, userName, authority);
+        String jwt = jwtService.createJwt(userInfo.get("userId"), userInfo.get("name"), userInfo.get("authority"));
         assertThat(jwt).isNotNull();
+        jwtToken = jwt; // static 키워드를 넣지않으면 초기화 되어서 다음 테스트 메소드에서 값 활용이 안 됨
         System.out.println(jwt);
     }
 
+    @Test
+    @Order(2)
+    void validationToken() {
+        Map<String, String> result = jwtService.validationToken(jwtToken);
+        assertThat(result).isNotNull();
+        assertThat(result.get("name")).isEqualTo(userInfo.get("name"));
 
-    // validation token도 검증 완료, 메서드내 getJwtToken()은 클라이언트의 요청이 필요하므로 테스트 코드에서는 생략
+    }
 
 
 }
