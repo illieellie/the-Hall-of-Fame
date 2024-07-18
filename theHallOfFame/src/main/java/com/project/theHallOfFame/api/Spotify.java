@@ -1,17 +1,26 @@
 package com.project.theHallOfFame.api;
 
-import com.project.theHallOfFame.properties.SpotifyAccount;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 
 public class Spotify {
-    private static final String CLIENT_ID = SpotifyAccount.ID.getValue();
-    private static final String CLIENT_SECRET = SpotifyAccount.PW.getValue();
-    private static final SpotifyApi spotifyApi = new SpotifyApi.Builder().setClientId(CLIENT_ID).setClientSecret(CLIENT_SECRET).build();
+
+    @Value("${api.spotify.id}")
+    private String CLIENT_ID;
+
+    @Value("${api.spotify.pw}")
+    private String CLIENT_SECRET;
+
+    private SpotifyApi spotifyApi;
+
+    public Spotify(){
+        spotifyApi = new SpotifyApi.Builder().setClientId(CLIENT_ID).setClientSecret(CLIENT_SECRET).build();
+    }
 
     public String accessToken() {
         ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
