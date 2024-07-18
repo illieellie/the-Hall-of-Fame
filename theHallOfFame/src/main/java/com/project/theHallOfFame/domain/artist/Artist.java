@@ -9,8 +9,8 @@ import org.springframework.data.annotation.Id;
 @Setter
 public class Artist {
 
-    @Id
-    ObjectId id; // mongoTemplate 고유 id
+//    @Id
+//    ObjectId id; // mongoTemplate 고유 id
 
     String artistId;
     String name;

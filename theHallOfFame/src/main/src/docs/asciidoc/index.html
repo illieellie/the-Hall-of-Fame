@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
 <meta name="author" content="https://github.com/illieellie">
-<title>The hall of fame REST API DOCS</title>
+<title>REST API DOCS &lt;The hall of fame&gt;</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -551,7 +551,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>The hall of fame REST API DOCS</h1>
+<h1>REST API DOCS &lt;The hall of fame&gt;</h1>
 <div class="details">
 <span id="author" class="author">https://github.com/illieellie</span><br>
 <span id="revnumber">version 1.0,</span>
@@ -595,7 +595,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /artist/abcd?artistId=abcd HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /artist/3Nrfpe0tUJi4K4DXYWgMUX HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -610,14 +610,15 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 94
+Content-Length: 238
 
 {
-  "id" : null,
-  "artistId" : "abcd",
-  "name" : "BTS",
-  "href" : null,
-  "images" : null
+  "artist" : {
+    "artistId" : "3Nrfpe0tUJi4K4DXYWgMUX",
+    "name" : "BTS",
+    "href" : "https://open.spotify.com/artist/3Nrfpe0tUJi4K4DXYWgMUX",
+    "images" : "https://i.scdn.co/image/ab6761610000e5ebd642648235ebf3460d2d1f6a"
+  }
 }</code></pre>
 </div>
 </div>
@@ -633,7 +634,7 @@ Content-Length: 94
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /artist/search/BTS?artistName=BTS HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /artist/search/BTS HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -648,14 +649,15 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 94
+Content-Length: 238
 
 {
-  "id" : null,
-  "artistId" : "abcd",
-  "name" : "BTS",
-  "href" : null,
-  "images" : null
+  "artist" : {
+    "artistId" : "3Nrfpe0tUJi4K4DXYWgMUX",
+    "name" : "BTS",
+    "href" : "https://open.spotify.com/artist/3Nrfpe0tUJi4K4DXYWgMUX",
+    "images" : "https://i.scdn.co/image/ab6761610000e5ebd642648235ebf3460d2d1f6a"
+  }
 }</code></pre>
 </div>
 </div>
@@ -686,21 +688,21 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 201
+Content-Length: 475
 
-[ {
-  "id" : null,
-  "artistId" : "abcd",
-  "name" : "BTS",
-  "href" : null,
-  "images" : null
-}, {
-  "id" : null,
-  "artistId" : "abcde",
-  "name" : "BLACKPINK",
-  "href" : null,
-  "images" : null
-} ]</code></pre>
+{
+  "artistList" : [ {
+    "artistId" : "3Nrfpe0tUJi4K4DXYWgMUX",
+    "name" : "BTS",
+    "href" : "https://open.spotify.com/artist/3Nrfpe0tUJi4K4DXYWgMUX",
+    "images" : "https://i.scdn.co/image/ab6761610000e5ebd642648235ebf3460d2d1f6a"
+  }, {
+    "artistId" : "41MozSoPIsD1dJM0CLPjZF",
+    "name" : "BLACKPINK",
+    "href" : "https://open.spotify.com/artist/41MozSoPIsD1dJM0CLPjZF",
+    "images" : "https://i.scdn.co/image/ab6761610000e5ebc9690bc711d04b3d4fd4b87c"
+  } ]
+}</code></pre>
 </div>
 </div>
 </div>
@@ -831,7 +833,7 @@ This is an attribute reference {url-quickref}[that links this text to the AsciiD
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2024-07-18 17:19:23 +0900
+Last updated 2024-07-18 17:31:18 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

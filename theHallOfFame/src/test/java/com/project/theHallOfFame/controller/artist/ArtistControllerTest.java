@@ -52,10 +52,14 @@ class ArtistControllerTest {
         artistList.add(artist2);
 
         artist.setName("BTS");
-        artist.setArtistId("abcd");
+        artist.setArtistId("3Nrfpe0tUJi4K4DXYWgMUX");
+        artist.setHref("https://open.spotify.com/artist/3Nrfpe0tUJi4K4DXYWgMUX");
+        artist.setImages("https://i.scdn.co/image/ab6761610000e5ebd642648235ebf3460d2d1f6a");
 
         artist2.setName("BLACKPINK");
-        artist2.setArtistId("abcde");
+        artist2.setArtistId("41MozSoPIsD1dJM0CLPjZF");
+        artist2.setHref("https://open.spotify.com/artist/41MozSoPIsD1dJM0CLPjZF");
+        artist2.setImages("https://i.scdn.co/image/ab6761610000e5ebc9690bc711d04b3d4fd4b87c");
     }
 
     @Test
@@ -67,7 +71,7 @@ class ArtistControllerTest {
 
         mockMvc.perform(
                         get("/artist/{id}", artistId)
-                                .param("artistId", artistId)
+                                //.param("artistId", artistId)
                 ).andDo(MockMvcRestDocumentation.document("artist/findArtistById",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())))
@@ -85,12 +89,12 @@ class ArtistControllerTest {
 
         mockMvc.perform(
                         get("/artist/search/{artistName}", artistName)
-                                .param("artistName", artistName)
+                                //.param("artistName", artistName)
                 ).andDo(MockMvcRestDocumentation.document("artist/findArtistByName",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("abcd")));
+                .andExpect(content().string(containsString(artist.getArtistId())));
 
     }
 
