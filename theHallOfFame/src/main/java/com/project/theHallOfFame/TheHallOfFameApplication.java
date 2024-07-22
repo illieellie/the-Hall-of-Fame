@@ -1,6 +1,5 @@
 package com.project.theHallOfFame;
 
-import com.project.theHallOfFame.service.InitialDataMigration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

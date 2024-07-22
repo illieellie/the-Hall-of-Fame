@@ -60,7 +60,7 @@ class ArtistControllerTest {
         artist2.setArtistId("41MozSoPIsD1dJM0CLPjZF");
         artist2.setHref("https://open.spotify.com/artist/41MozSoPIsD1dJM0CLPjZF");
         artist2.setImages("https://i.scdn.co/image/ab6761610000e5ebc9690bc711d04b3d4fd4b87c");
-    }
+        }
 
     @Test
     void findArtistById() throws Exception {
