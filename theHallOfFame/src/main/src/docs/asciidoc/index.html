@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
 <meta name="author" content="https://github.com/illieellie">
-<title>REST API DOCS &lt;The hall of fame&gt;</title>
+<title>REST API DOCS : The hall of fame</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -551,7 +551,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>REST API DOCS &lt;The hall of fame&gt;</h1>
+<h1>REST API DOCS : The hall of fame</h1>
 <div class="details">
 <span id="author" class="author">https://github.com/illieellie</span><br>
 <span id="revnumber">version 1.0,</span>
@@ -583,15 +583,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="_1_artist">1. Artist</h2>
 <div class="sectionbody">
-<hr>
+<div class="paragraph">
+<p>Get Spotify catalog information for a artist identified.</p>
+</div>
 <div class="sect2">
 <h3 id="_1_findartistbyid">1. findArtistById</h3>
+<div class="paragraph">
+<p>Get one artist information by artist Id.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
 <p>Request</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<div class="title"><strong>GET /artist/{id}</strong></div>
+<p>&lt;id, string&gt; the Spotify ID of the artist.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -625,12 +634,19 @@ Content-Length: 238
 </div>
 <div class="sect2">
 <h3 id="_2_findartistbyname">2. findArtistByName</h3>
+<div class="paragraph">
+<p>Get one artist information by artist name.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
 <p>Request</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<div class="title"><strong>GET /artist/search/{name}</strong></div>
+<p>&lt;name, string&gt; the name of the artist.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -664,6 +680,9 @@ Content-Length: 238
 </div>
 <div class="sect2">
 <h3 id="_3_findartistall">3. findArtistAll</h3>
+<div class="paragraph">
+<p>Get artist list simple information.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -672,6 +691,7 @@ Content-Length: 238
 </ul>
 </div>
 <div class="listingblock">
+<div class="title"><strong>GET /artist</strong></div>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /artist HTTP/1.1
 Host: localhost:8080</code></pre>
@@ -769,56 +789,101 @@ Content-Length: 475
 </div>
 </div>
 </div>
-<div id="id-for-listing-block" class="listingblock">
+<div id="id-for-listing-block" class="openblock">
 <div class="title">Listing block title</div>
 <div class="content">
-<pre>Content in a listing block is subject to verbatim substitutions.
-Listing block content is commonly used to preserve code input.
-
-
-===== Fourth level heading
-
-.Table title
-|===
-|Column heading 1 |Column heading 2
-
-|Column 1, row 1
-|Column 2, row 1
-
-|Column 1, row 2
-|Column 2, row 2
-|===
-
-====== Fifth level heading
-
-[quote,firstname lastname,movie title]
-____
-I am a block quote or a prose excerpt.
-I am subject to normal substitutions.
-____
-
-[verse,firstname lastname,poem title and more]
-____
-I am a verse block.
-  Indents and endlines are preserved in verse blocks.
-____
-
-== First level heading
-
-TIP: There are five admonition labels: Tip, Note, Important, Caution and Warning.
-
-// I am a comment and won't be rendered.
-
-. ordered list item
-.. nested ordered list item
-. ordered list item
-
-The text at the end of this sentence is cross referenced to &lt;&lt;_third_level_heading,the third level heading&gt;&gt;
-
-== First level heading
-
-This is a link to the https://docs.asciidoctor.org/home/[Asciidoctor documentation].
-This is an attribute reference {url-quickref}[that links this text to the AsciiDoc Syntax Quick Reference].</pre>
+<div class="paragraph">
+<p>Content in a listing block is subject to verbatim substitutions.
+Listing block content is commonly used to preserve code input.</p>
+</div>
+<div class="paragraph">
+<p>===== Fourth level heading</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Table title</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Column heading 1</th>
+<th class="tableblock halign-left valign-top">Column heading 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Column 1, row 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Column 2, row 1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Column 1, row 2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Column 2, row 2</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>====== Fifth level heading</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>I am a block quote or a prose excerpt.
+I am subject to normal substitutions.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; firstname lastname<br>
+<cite>movie title</cite>
+</div>
+</div>
+<div class="verseblock">
+<pre class="content">I am a verse block.
+  Indents and endlines are preserved in verse blocks.</pre>
+<div class="attribution">
+&#8212; firstname lastname<br>
+<cite>poem title and more</cite>
+</div>
+</div>
+<div class="paragraph">
+<p>== First level heading</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+There are five admonition labels: Tip, Note, Important, Caution and Warning.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>ordered list item</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>nested ordered list item</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>ordered list item</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>== First level heading</p>
+</div>
+<div class="paragraph">
+<p>This is a link to the <a href="https://docs.asciidoctor.org/home/">Asciidoctor documentation</a>.
+This is an attribute reference <a href="https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/">that links this text to the AsciiDoc Syntax Quick Reference</a>.</p>
+</div>
 </div>
 </div>
 </div>
@@ -833,7 +898,7 @@ This is an attribute reference {url-quickref}[that links this text to the AsciiD
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2024-07-18 17:31:18 +0900
+Last updated 2024-07-22 15:09:11 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

@@ -1,4 +1,4 @@
-= REST API DOCS <The hall of fame>
+= REST API DOCS : The hall of fame
 https://github.com/illieellie
 1.0, July 18, 2024: AsciiDoc article template
 :toc:
@@ -9,10 +9,15 @@ https://github.com/illieellie
 명예의 전당 테스트 기반 자동 생성 Rest API 문서입니다.
 
 == 1. Artist
----
+Get Spotify catalog information for a artist identified.
+
 === 1. findArtistById
+Get one artist information by artist Id.
 
 - Request
+
+.*GET /artist/{id}*
+<id, string> the Spotify ID of the artist.
 
 include::{snippets}/artist/findArtistById/http-request.adoc[]
 
@@ -21,9 +26,12 @@ include::{snippets}/artist/findArtistById/http-request.adoc[]
 include::{snippets}/artist/findArtistById/http-response.adoc[]
 
 === 2. findArtistByName
+Get one artist information by artist name.
 
 - Request
 
+.*GET /artist/search/{name}*
+<name, string> the name of the artist.
 include::{snippets}/artist/findArtistByName/http-request.adoc[]
 
 - Response
@@ -31,9 +39,11 @@ include::{snippets}/artist/findArtistByName/http-request.adoc[]
 include::{snippets}/artist/findArtistByName/http-response.adoc[]
 
 === 3. findArtistAll
+Get artist list simple information.
 
 - Request
 
+.*GET /artist*
 include::{snippets}/artist/findArtistAll/http-request.adoc[]
 
 - Response
@@ -81,7 +91,7 @@ Sidebars contain aside text and are subject to normal substitutions.
 
 [#id-for-listing-block]
 .Listing block title
-----
+--
 Content in a listing block is subject to verbatim substitutions.
 Listing block content is commonly used to preserve code input.
 
@@ -123,7 +133,6 @@ TIP: There are five admonition labels: Tip, Note, Important, Caution and Warning
 .. nested ordered list item
 . ordered list item
 
-The text at the end of this sentence is cross referenced to <<_third_level_heading,the third level heading>>
 
 == First level heading
 
