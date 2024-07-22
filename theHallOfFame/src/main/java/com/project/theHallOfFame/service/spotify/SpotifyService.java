@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -28,14 +29,15 @@ public class SpotifyService {
 
     public ResponseEntity<Map> getArtist(String id) {
 
-        spotifyToken = spotify.getAccessToken();
+        //spotifyToken = spotify.getAccessToken();
         //id : spotify 아티스트 고유 id
         RestTemplate rest = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + spotifyToken);
-        ;
-        headers.add("Host", "api.spotify.com");
-        headers.add("Content-type", "application/json");
+        HttpHeaders headers = getHeader();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("Authorization", "Bearer " + spotifyToken);
+//        ;
+//        headers.add("Host", "api.spotify.com");
+//        headers.add("Content-type", "application/json");
         String body = "";
 
         HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
@@ -46,6 +48,47 @@ public class SpotifyService {
 
         return responseEntity;
     }
+
+    public Map getArtistAlbums(String id) {
+        //spotifyToken = spotify.getAccessToken();
+        RestTemplate rest = new RestTemplate();
+        HttpHeaders headers = getHeader();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("Authorization", "Bearer " + spotifyToken);
+//        ;
+//        headers.add("Host", "api.spotify.com");
+//        headers.add("Content-type", "application/json");
+        String body = "";
+
+        HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
+        ResponseEntity<Map> responseEntity = rest.exchange("https://api.spotify.com/v1/artists/" + id+"/albums", HttpMethod.GET, requestEntity, Map.class);
+
+        // 필요한 정보 파싱하기
+        Map response = responseEntity.getBody();
+        System.out.println(response);
+
+        // items, total
+        // list, integer
+
+        Map<String, Object> parsingResult = new HashMap<>();
+        parsingResult.put("total", response.get("total"));
+        parsingResult.put("items", response.get("items"));
+
+        return parsingResult;
+    }
+
+    private HttpHeaders getHeader(){
+        spotifyToken = spotify.getAccessToken();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + spotifyToken);
+        ;
+        headers.add("Host", "api.spotify.com");
+        headers.add("Content-type", "application/json");
+
+        return headers;
+    }
+
+
 
     public void insertArtist(String id) throws Exception {
         ResponseEntity<Map> responseEntity = getArtist(id);

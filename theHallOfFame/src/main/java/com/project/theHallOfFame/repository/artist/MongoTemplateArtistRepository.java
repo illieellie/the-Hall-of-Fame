@@ -20,6 +20,7 @@ public class MongoTemplateArtistRepository implements ArtistRepository{
 
     @Override
     public Artist findArtistById(String artistId) {
+        /* 기능 삭제 예정 */
         Query query = Query.query(Criteria.where("artistId").is(artistId));
         return mongoTemplate.findOne(query,Artist.class, COLLECTION_NAME);
     }

@@ -23,23 +23,23 @@ public class ArtistController {
 
     @GetMapping("/artist/{artistId}")
     public Map<String, Object> findArtistbyId(@PathVariable String artistId) {
-        Artist artist = artistService.findArtistById(artistId);
-        if (artist == null) {
+        Map<String, Object> artistAlbum = artistService.findArtistById(artistId);
+        if (artistAlbum == null) {
             OutputView.dataNotFound(artistId, "findArtistbyId");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return convertToMap("artist", artist);
+        return convertToMap("artistAlbum", artistAlbum);
     }
-
-    @GetMapping("/artist/search/{artistName}")
-    public Map<String, Object> findArtistbyName(@PathVariable String artistName) {
-        Artist artist = artistService.findArtistByName(artistName);
-        if (artist == null) {
-            OutputView.dataNotFound(artistName, "findArtistbyName");
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return convertToMap("artist", artist);
-    }
+//
+//    @GetMapping("/artist/search/{artistName}")
+//    public Map<String, Object> findArtistbyName(@PathVariable String artistName) {
+//        Artist artist = artistService.findArtistByName(artistName);
+//        if (artist == null) {
+//            OutputView.dataNotFound(artistName, "findArtistbyName");
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+//        }
+//        return convertToMap("artist", artist);
+//    }
 
 
     @GetMapping("/artist")
