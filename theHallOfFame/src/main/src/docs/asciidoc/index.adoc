@@ -12,21 +12,22 @@ https://github.com/illieellie
 Get Spotify catalog information for a artist identified.
 
 === 1. findArtistById
-Get one artist information by artist Id.
+Get artist's information of album by artist Id.
 
 - Request
 
 .*GET /artist/{id}*
 <id, string> the Spotify ID of the artist.
 
-include::{snippets}/artist/findArtistById/http-request.adoc[]
+include::{snippets}/artist/integration/findArtistById/http-request.adoc[]
 
 - Response
 
-include::{snippets}/artist/findArtistById/http-response.adoc[]
+include::{snippets}/artist/integration/findArtistById/http-response.adoc[]
 
 === 2. findArtistByName
-Get one artist information by artist name.
+(사용 미정)
+Get artist's information by artist name.
 
 - Request
 
@@ -44,11 +45,11 @@ Get artist list simple information.
 - Request
 
 .*GET /artist*
-include::{snippets}/artist/findArtistAll/http-request.adoc[]
+include::{snippets}/artist/integration/findArtistAll/http-request.adoc[]
 
 - Response
 
-include::{snippets}/artist/findArtistAll/http-response.adoc[]
+include::{snippets}/artist/integration/findArtistAll/http-response.adoc[]
 
 
 
