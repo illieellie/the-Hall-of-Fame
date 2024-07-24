@@ -2,6 +2,7 @@ package com.project.theHallOfFame.repository.user;
 
 import com.project.theHallOfFame.domain.artist.Artist;
 import com.project.theHallOfFame.domain.user.UserDetails;
+import com.project.theHallOfFame.domain.user.UserJoinInput;
 import com.project.theHallOfFame.domain.user.UserSecurity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -39,6 +40,12 @@ private final String COLLECTION_NAME = "userAccount";
     public UserSecurity getUserSecurity(String userId) {
         Query query = Query.query(Criteria.where("userId").is(userId));
         return mongoTemplate.findOne(query, UserSecurity.class, COLLECTION_NAME);
+    }
+
+    @Override
+    public void saveUserAccount(UserJoinInput userJoinInput) {
+        mongoTemplate.save(userJoinInput, COLLECTION_NAME);
+        System.out.println("[Insert] DB에 user 정보를 저장 했습니다. userId = " + userJoinInput.getUserId());
     }
 
 

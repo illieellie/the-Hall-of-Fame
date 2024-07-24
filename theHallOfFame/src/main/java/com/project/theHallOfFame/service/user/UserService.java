@@ -1,6 +1,7 @@
 package com.project.theHallOfFame.service.user;
 
 import com.project.theHallOfFame.domain.user.UserDetails;
+import com.project.theHallOfFame.domain.user.UserJoinInput;
 import com.project.theHallOfFame.domain.user.UserSecurity;
 import com.project.theHallOfFame.repository.user.UserRepository;
 import com.project.theHallOfFame.security.JwtService;
@@ -41,12 +42,23 @@ public class UserService {
 
     private String createToken(UserSecurity us) {
         // JWT 토큰 발급
-      String result = jwtService.createJwt(us.getUserId(), us.getName(), us.getAuthority());
-        return result;
+        return jwtService.createJwt(us.getUserId(), us.getName(), us.getAuthority());
     }
 
 
     public UserDetails getUserDetails(String userId) {
         return userRepository.getUserDetails(userId);
+    }
+
+    public void userJoinInputSave(UserJoinInput userJoinInput) throws Exception{
+        // 아이디 중복이 있는지 확인
+        String userId = userJoinInput.getUserId();
+        if(!userRepository.getUserExist(userId)){
+            // 에러 반환
+            throw new Exception("Error : 이미 동일한 ID가 있습니다.");
+        }
+        userRepository.saveUserAccount(userJoinInput);
+
+
     }
 }
