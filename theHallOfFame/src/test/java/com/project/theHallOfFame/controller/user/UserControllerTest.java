@@ -1,7 +1,9 @@
 package com.project.theHallOfFame.controller.user;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.theHallOfFame.WebConfig;
 import com.project.theHallOfFame.domain.user.UserDetails;
+import com.project.theHallOfFame.domain.user.UserJoinInput;
 import com.project.theHallOfFame.interceptor.AuthenticationInterceptor;
 import com.project.theHallOfFame.security.JwtService;
 import com.project.theHallOfFame.service.user.UserService;
@@ -42,6 +44,7 @@ class UserControllerTest {
     @MockBean
     JwtService jwtService;
 
+    UserJoinInput userJoinInput;
 
     Map<String, String> userInfo;
     UserDetails userDetails;
@@ -54,6 +57,15 @@ class UserControllerTest {
         userDetails = new UserDetails();
         userDetails.setUserId("user1");
         userDetails.setAuthority("ADMIN");
+
+
+        userJoinInput = new UserJoinInput();
+        userJoinInput.setUserId("ssul4666");
+        userJoinInput.setUserPassword("12345678");
+        userJoinInput.setEmail("ssul4666@naver.com");
+        userJoinInput.setName("최호랑");
+        userJoinInput.setPhone("010-0000-0000");
+        userJoinInput.setAuthority("MEMBER");
     }
 
 
@@ -95,8 +107,6 @@ class UserControllerTest {
     @Test
     void findUserPage_success() throws Exception{
 
-        // 진짜 토큰을 보내야 통과
-
         // mockMvc 행위 지정
         doReturn(userInfo).when(jwtService).validationToken("temp-token");
 
@@ -122,7 +132,6 @@ class UserControllerTest {
     @Test
     void findUserPageDetail_success() throws Exception{
 
-        // 토큰을 보내야 통과
         // mockMvc 행위 지정
         doReturn(userInfo).when(jwtService).validationToken("temp-token");
         doReturn(userDetails).when(userService).getUserDetails("user1");
@@ -134,5 +143,71 @@ class UserControllerTest {
                 .andExpect(content().string(containsString("ADMIN")))
                 .andDo(print());
     }
+
+
+    @Test
+    void joinDisplayForm() throws Exception{
+
+        mockMvc.perform(
+                        get("/join")
+                ).andExpect(status().isOk())
+                .andExpect(content().string(containsString("MEMBER")))
+                .andDo(print());
+    }
+
+    // user join 시 필드 validation - 입력 필드가 유효하지 않은 경우 등 검증
+    @Test
+    void userJoinInputSave_BeanValidation_성공() throws Exception{
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(userJoinInput);
+        mockMvc.perform(
+                        post("/join")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(json)
+                ).andExpect(status().isOk())
+                //.andExpect(content().string(containsString("MEMBER")))
+                .andDo(print());
+    }
+
+    @Test
+    void userJoinInputSave_BeanValidation_실패_휴대폰번호() throws Exception{
+
+        // @Validated UserJoinInput userJoinInput, BindingResult bindingResult){
+        //        // validation
+        userJoinInput.setPhone("01000000000");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(userJoinInput);
+        mockMvc.perform(
+                        post("/join")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(json)
+                ).andExpect(status().is4xxClientError())
+                //.andExpect(content().string(containsString("MEMBER")))
+                .andDo(print());
+    }
+
+    @Test
+    void userJoinInputSave_BeanValidation_실패_두개이상() throws Exception{
+
+        // @Validated UserJoinInput userJoinInput, BindingResult bindingResult){
+        //        // validation
+        userJoinInput.setUserId(null);
+        userJoinInput.setPhone("01000000000");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(userJoinInput);
+        mockMvc.perform(
+                        post("/join")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(json)
+                ).andExpect(status().is4xxClientError())
+                .andDo(print());
+    }
+
+
+
+
 
 }
