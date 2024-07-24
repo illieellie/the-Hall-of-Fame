@@ -82,13 +82,11 @@ class ArtistControllerTest {
 
         mockMvc.perform(
                         get("/artist/{id}", artistId)
-                                //.param("artistId", artistId)
                 ).andDo(MockMvcRestDocumentation.document("artist/findArtistById",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())))
                 .andExpect(status().isOk())
                 .andDo(print());
-                //.andExpect(content().string(containsString("BTS")));
     }
 
 
