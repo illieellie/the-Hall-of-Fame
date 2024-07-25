@@ -21,6 +21,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     private final static String NON_EXIST_TOKEN = "토큰이 존재하지 않습니다. 로그인 페이지로 이동합니다.";
     private final static String NON_VALIDATION_TOKEN = "유효하지 않은 토큰입니다. 로그인 페이지로 이동합니다.";
     private final static String NON_AUTHORIZED_REQUEST = "admin 권한이 필요한 요청입니다. 권한이 불충분합니다.";
+    private final int BEARER_STR_LENGTH = 7;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
@@ -43,11 +44,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         String accessToken = request.getHeader("Authorization");
 
         // 토큰 유무 확인
-        if(accessToken ==null||accessToken.isEmpty()){
+        if(accessToken ==null||accessToken.isEmpty()||accessToken.length()<BEARER_STR_LENGTH){
             System.out.println("[Debug] 토큰을 찾을 수 없습니다.");
             setErrorResponse(response, NON_EXIST_TOKEN);
             return false;
         }
+        accessToken = accessToken.substring(BEARER_STR_LENGTH);
 
         // 토큰 유효성 검사 후 userId 반환
         Map<String, String> userInfo = jwtService.validationToken(accessToken);

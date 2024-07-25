@@ -22,15 +22,34 @@ public class ArtistController {
     private final ArtistService artistService;
 
     @GetMapping("/artist/{artistId}")
-    public Map<String, Object> findArtistbyId(@PathVariable String artistId) {
+    public Map<String, Object> getArtistAlbumById(@PathVariable String artistId) {
         Map<String, Object> artistAlbum = artistService.findArtistById(artistId);
         if (artistAlbum == null) {
-            OutputView.dataNotFound(artistId, "findArtistbyId");
+            OutputView.dataNotFound(artistId, "getArtistAlbumById");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return convertToMap("artistAlbum", artistAlbum);
     }
-//
+
+
+    @GetMapping("/artist")
+    public Map<String, Object> getArtistAll() {
+
+        List<Artist> artistList = artistService.findArtistAll();
+        if (artistList == null) {
+            OutputView.dataNotFound("artist list", "getArtistAll");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return convertToMap("artistList", artistList);
+    }
+
+
+    private Map<String, Object> convertToMap(String name, Object obj) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(name, obj);
+        return map;
+    }
+
 //    @GetMapping("/artist/search/{artistName}")
 //    public Map<String, Object> findArtistbyName(@PathVariable String artistName) {
 //        Artist artist = artistService.findArtistByName(artistName);
@@ -40,24 +59,4 @@ public class ArtistController {
 //        }
 //        return convertToMap("artist", artist);
 //    }
-
-
-    @GetMapping("/artist")
-    public Map<String, Object> findArtistAll() {
-
-        List<Artist> artistList = artistService.findArtistAll();
-        if (artistList == null) {
-            OutputView.dataNotFound("artist list", "findArtistAll");
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return convertToMap("artistList", artistList);
-    }
-
-
-    private Map<String, Object> convertToMap(String name, Object obj){
-        Map<String, Object> map = new HashMap<>();
-        map.put(name,obj);
-        return map;
-    }
-
 }

@@ -9,15 +9,15 @@ https://github.com/illieellie
 명예의 전당 테스트 기반 자동 생성 Rest API 문서입니다.
 
 == 1. Artist
-Get Spotify catalog information for a artist identified.
+Get Spotify-based information for a artist identified.
 
-=== 1. findArtistById
-Get artist's information of album by artist Id.
+=== 1. getArtistAlbumById
+Get artist's album information by artist Id.
 
 - Request
 
 .*GET /artist/{id}*
-<id, string> the Spotify ID of the artist.
+<id, string> the Spotify id of the artist.
 
 include::{snippets}/artist/integration/findArtistById/http-request.adoc[]
 
@@ -25,7 +25,7 @@ include::{snippets}/artist/integration/findArtistById/http-request.adoc[]
 
 include::{snippets}/artist/integration/findArtistById/http-response.adoc[]
 
-=== 2. findArtistByName
+=== 2. getArtistByName
 (사용 미정)
 Get artist's information by artist name.
 
@@ -39,28 +39,88 @@ include::{snippets}/artist/findArtistByName/http-request.adoc[]
 
 include::{snippets}/artist/findArtistByName/http-response.adoc[]
 
-=== 3. findArtistAll
-Get artist list simple information.
+=== 3. getArtistAll
+Get artist list with artist's information.
 
 - Request
 
 .*GET /artist*
-include::{snippets}/artist/integration/findArtistAll/http-request.adoc[]
+include::{snippets}/artist/integration/getArtistAll/http-request.adoc[]
 
 - Response
 
-include::{snippets}/artist/integration/findArtistAll/http-response.adoc[]
-
-
-
+include::{snippets}/artist/integration/getArtistAll/http-response.adoc[]
 
 == 2. Member
 
+=== 1. getUserJoinForm
+Get the necessary information for user membership.
+
+- Request
+
+.*get /join*
+include::{snippets}/user/integration/getUserJoinForm/http-request.adoc[]
+
+- Response
+
+성공 : 200
+include::{snippets}/user/integration/getUserJoinForm/http-response.adoc[]
+
+=== 2. saveUserJoinForm
+Save the user's join form for user membership.
+- Request
+
+.*POST /join*
+include::{snippets}/user/integration/saveUserJoinForm_BeanValidation_success/http-request.adoc[]
+
+- Response
+
+성공 : 200
+include::{snippets}/user/integration/saveUserJoinForm_BeanValidation_success/http-response.adoc[]
+
+실패 : 400
+include::{snippets}/user/integration/saveUserJoinForm_BeanValidation_fail/http-response.adoc[]
 
 
 
+=== 3. loginUser
+After user log in, get the jwt token user need for authentication.
 
----
+- Request
+
+.*POST /login*
+include::{snippets}/user/integration/loginUser_success/http-request.adoc[]
+
+- Response
+
+성공 : 200
+include::{snippets}/user/integration/loginUser_success/http-response.adoc[]
+
+실패 : 400
+include::{snippets}/user/integration/loginUser_fail/http-response.adoc[]
+
+=== 4. getUserHomePage
+Get user personal hompage for social network.
+
+- Request
+
+.*GET /userPage/{userId}*
+<userId, string> user's id
+
+--header 'Authorization: Bearer {jwt_token}'
+include::{snippets}/user/integration/getUserHomePage_success/http-request.adoc[]
+
+- Response
+
+성공 : 200
+include::{snippets}/user/integration/getUserHomePage_success/http-response.adoc[]
+
+실패 : 403
+include::{snippets}/user/integration/getUserHomePage_fail/http-response.adoc[]
+
+=== 5. getUserAccountPage
+개발 예정
+
 ---
 이하 adoc 문법 예시 입니다.
 

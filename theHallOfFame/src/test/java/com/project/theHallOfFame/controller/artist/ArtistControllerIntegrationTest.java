@@ -26,10 +26,10 @@ public class ArtistControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @Test
-    void findArtistbyId() throws Exception{
+    void getArtistAlbumById() throws Exception{
         mockMvc.perform(
                         get("/artist/{id}","3Nrfpe0tUJi4K4DXYWgMUX")
-                ).andDo(MockMvcRestDocumentation.document("artist/integration/findArtistbyId",
+                ).andDo(MockMvcRestDocumentation.document("artist/integration/getArtistAlbumById",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())))
                 .andExpect(status().isOk())
@@ -38,10 +38,10 @@ public class ArtistControllerIntegrationTest {
     }
 
     @Test
-    void findArtistAll() throws Exception {
+    void getArtistAll() throws Exception {
         mockMvc.perform(
                         get("/artist")
-                ).andDo(MockMvcRestDocumentation.document("artist/integration/findArtistAll",
+                ).andDo(MockMvcRestDocumentation.document("artist/integration/getArtistAll",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())))
                 .andExpect(status().isOk())

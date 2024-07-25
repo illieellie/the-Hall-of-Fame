@@ -114,10 +114,11 @@ class UserControllerTest {
         mockMvc.perform(
                         get("/userPage/{userId}", "1")
                                 .param("userId", userInfo.get("userId"))
-                                .header("Authorization", "temp-token")
+                                .header("Authorization", "Bearer " + "temp-token")
                 ).andExpect(status().isOk())
                 //.andExpect(content().string(containsString("ACCEPT")))
                 .andDo(print());
+
     }
 
     @Test
@@ -138,7 +139,7 @@ class UserControllerTest {
 
         mockMvc.perform(
                         get("/userPage/{userId}", "user1")
-                                .header("Authorization", "temp-token")
+                                .header("Authorization", "Bearer " + "temp-token")
                 ).andExpect(status().isOk())
                 .andExpect(content().string(containsString("ADMIN")))
                 .andDo(print());

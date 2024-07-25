@@ -14,6 +14,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final String TOKEN_BEARER = "Bearer ";
 
     public String loginValidation(String id, String pw){
 
@@ -42,7 +43,7 @@ public class UserService {
 
     private String createToken(UserSecurity us) {
         // JWT 토큰 발급
-        return jwtService.createJwt(us.getUserId(), us.getName(), us.getAuthority());
+        return TOKEN_BEARER + jwtService.createJwt(us.getUserId(), us.getName(), us.getAuthority());
     }
 
 
@@ -53,12 +54,11 @@ public class UserService {
     public void userJoinInputSave(UserJoinInput userJoinInput) throws Exception{
         // 아이디 중복이 있는지 확인
         String userId = userJoinInput.getUserId();
-        if(!userRepository.getUserExist(userId)){
+        if(userRepository.getUserExist(userId)){
             // 에러 반환
             throw new Exception("Error : 이미 동일한 ID가 있습니다.");
         }
         userRepository.saveUserAccount(userJoinInput);
-
 
     }
 }

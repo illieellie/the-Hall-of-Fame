@@ -81,7 +81,6 @@ public class SpotifyService {
         spotifyToken = spotify.getAccessToken();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + spotifyToken);
-        ;
         headers.add("Host", "api.spotify.com");
         headers.add("Content-type", "application/json");
 

@@ -33,7 +33,7 @@ public class UserController {
     private final ObjectMapper objectMapper;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserSecurity user) {
+    public ResponseEntity<String> loginUser(@RequestBody UserSecurity user) {
 
         // 서비스에서 validation
         String token = userService.loginValidation(user.getUserId(), user.getUserPassword());
@@ -46,14 +46,14 @@ public class UserController {
 
 
     @GetMapping("/join")
-    public UserJoinInput joinDisplayForm() {
+    public UserJoinInput getUserJoinForm() {
         UserJoinInput userJoinInput = new UserJoinInput();
         userJoinInput.setAuthority("MEMBER");
         return userJoinInput;
     }
 
     @PostMapping("/join")
-    public ResponseEntity<String> userJoinInputSave(@Validated @RequestBody UserJoinInput userJoinInput, BindingResult bindingResult) throws Exception {
+    public ResponseEntity<String> saveUserJoinForm(@Validated @RequestBody UserJoinInput userJoinInput, BindingResult bindingResult) throws Exception {
         // validation
         if (bindingResult.hasErrors()) {
             // 메세지 : 유효하지 않는 입력 형식
@@ -85,7 +85,7 @@ public class UserController {
     /* use page 기능 */
     @Auth(role = MEMBER)
     @GetMapping("/userPage/{userId}")
-    public ResponseEntity<String> findUserPage(@PathVariable String userId) throws Exception {
+    public ResponseEntity<String> getUserHomePage(@PathVariable String userId) throws Exception {
         // 인터셉터로 해당 페이지 이동하기 전 인가
 
         UserDetails userDetails = userService.getUserDetails(userId);

@@ -12,13 +12,12 @@ import org.springframework.data.annotation.Id;
 @Getter
 @Setter
 public class UserJoinInput {
-    @Id
-    private ObjectId id; // mongoTemplate 고유 id
+//    @Id
+//    private ObjectId id; // mongoTemplate 고유 id
 
     @NotBlank
     private String userId;
 
-    @Min(8)
     private String userPassword;
 
     @NotBlank
